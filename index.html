@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+
+<!-- Fonte romântica -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<title>Heart Particle System</title>
+
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: #000;
+    }
+
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: #ff2a6d;
+        text-shadow: 0 0 20px #ff2a6d, 0 0 40px #ff2a6d;
+    }
+
+    .heart {
+        font-size: 150px;
+        animation: pulse 1.5s infinite;
+    }
+
+    .text {
+        font-family: 'Great Vibes', cursive;
+        font-size: 60px;
+        letter-spacing: 4px;
+        margin-top: 10px;
+    }
+
+    .btnMusic {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        background: #ff2a6d;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 0 15px #ff2a6d;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+        100% { transform: scale(1); }
+    }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="center">
+    <div class="heart">❤️</div>
+    <div class="text">Feliz dia Mundial do Amor!</div>
+</div>
+
+<button class="btnMusic" onclick="playMusic()">🎵 Tocar Música</button>
+
+<!-- Música -->
+<audio id="music" loop>
+    <!-- coloque aqui sua música -->
+    <source src="music.mp3" type="audio/mp3">
+</audio>
+
+<script>
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+class Particle {
+    constructor() {
+        this.reset();
+    }
+
+    reset() {
+        this.x = canvas.width / 2;
+        this.y = canvas.height / 2;
+
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 8 + 3;
+
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+
+        this.life = 0;
+        this.maxLife = 100;
+    }
+
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.life++;
+
+        if (this.life >= this.maxLife) {
+            this.reset();
+        }
+    }
+
+    draw() {
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "white";
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x - this.vx * 2, this.y - this.vy * 2);
+        ctx.stroke();
+    }
+}
+
+function createParticles(num) {
+    for (let i = 0; i < num; i++) {
+        particles.push(new Particle());
+    }
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // limpa totalmente
+
+    particles.forEach(p => {
+        p.update();
+        p.draw();
+    });
+
+    requestAnimationFrame(animate);
+}
+
+
+createParticles(300);
+animate();
+
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+// Música
+function playMusic() {
+    const music = document.getElementById("music");
+    music.play();
+}
+</script>
+
+</body>
+</html>
