@@ -1,6 +1,6 @@
  <h1 align="center"> Sistema de Partículas em Forma de Coração: Uma Bela Animação para Celebrar o Amor </h1>
 
-Introdução
+<h1> Introdução</h1>
 Neste artigo, vamos explorar um código encantador que cria um sistema de partículas em forma de coração usando HTML, CSS e JavaScript. Este código não só gera uma animação visualmente atraente de partículas, como também inclui uma mensagem sincera para celebrar o amor. Vamos analisar os principais conceitos e a estrutura do código para entender como ele funciona.
 
 Conceitos-chave
