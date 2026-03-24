@@ -29,6 +29,19 @@
         text-align: center;
         color: #ff2a6d;
         text-shadow: 0 0 20px #ff2a6d, 0 0 40px #ff2a6d;
+        z-index: 2;
+    }
+
+    .hands-image {
+        position: absolute;
+        top: 64%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 1000px;
+        height: 1000px;
+        object-fit: contain;
+        z-index: 1;
+        opacity: 100;
     }
 
     .heart {
@@ -40,7 +53,7 @@
         font-family: 'Great Vibes', cursive;
         font-size: 60px;
         letter-spacing: 4px;
-        margin-top: 10px;
+        margin-top: 80px;
     }
 
     .btnMusic {
@@ -69,16 +82,17 @@
 
 <canvas id="particles"></canvas>
 
+<img src="maos.png" alt="Mãos" class="hands-image">
+
 <div class="center">
     <div class="heart">❤️</div>
     <div class="text">Feliz dia Mundial do Amor!</div>
 </div>
 
-<button class="btnMusic" onclick="playMusic()">🎵 Tocar Música</button>
+<!-- <button class="btnMusic" onclick="playMusic()">🎵 Tocar Música</button> -->
 
 <!-- Música -->
 <audio id="music" loop>
-    <!-- coloque aqui sua música -->
     <source src="music.mp3" type="audio/mp3">
 </audio>
 
@@ -91,7 +105,7 @@ canvas.height = window.innerHeight;
 
 let particles = [];
 
-class Particle {
+class Particle { // gerenciar particulas individuais
     constructor() {
         this.reset();
     }
@@ -133,13 +147,13 @@ class Particle {
     }
 }
 
-function createParticles(num) {
+function createParticles(num) { // gera um numero específico de partículas
     for (let i = 0; i < num; i++) {
         particles.push(new Particle());
     }
 }
 
-function animate() {
+function animate() { // loop de animação
     ctx.clearRect(0, 0, canvas.width, canvas.height); // limpa totalmente
 
     particles.forEach(p => {
@@ -160,7 +174,7 @@ window.addEventListener("resize", () => {
 });
 
 // Música
-function playMusic() {
+function playMusic() { //
     const music = document.getElementById("music");
     music.play();
 }
